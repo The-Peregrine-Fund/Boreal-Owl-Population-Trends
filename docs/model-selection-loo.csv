@@ -1,7 +1,8 @@
 "","model","name","elpd_diff","se_diff"
-"2",2,"seas+year+year2+seas:year",0,0
-"1",1,"seas+year+year2+seas:year+seas:year2",-2.7,1.5
-"5",5,"seas",-8,4.2
-"4",4,"seas+year",-8.1,3.8
-"3",3,"seas+year+year2",-9.1,3.8
-"6",6,"null",-15.1,4
+"2",2,"TIME+YEAR+YEAR2+TIME:YEAR",0,0
+"1",1,"TIME+YEAR+YEAR2+SEAS:YEAR+SEAS:YEAR2",-0.5,0.9
+"4",4,"TIME+YEAR",-1.2,2.1
+"3",3,"TIME+YEAR+YEAR2",-1.4,2
+"7",7,"TIME+YEAR+TIME:YEAR",-1.5,2
+"6",6,"NULL",-2.8,2.6
+"5",5,"TIME",-3,2.7
