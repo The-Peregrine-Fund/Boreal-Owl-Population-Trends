@@ -1,9 +1,11 @@
-dat <- read.csv("data\\data.csv")
+dat <- read.csv("data\\data_T.csv")
 datl <- list(y = dat$caps)
 constl <- list(time = (dat$year - median(dat$year))/ max(dat$year - median(dat$year)),
                effort = dat$effort/500,
                ntime = length(dat$year),
                time2 = 1:length(1996:2023)/4)
+d1 <- list(dat=dat, datl=datl, constl=constl)
+save(d1, file="data//data_s1.Rdata")
 # caps are number of captures
 # effort are net hours
 library (nimble)
@@ -175,7 +177,7 @@ MCMCsummary(pois, params_p,
 par(mfrow=c(1,1))
 MCMCplot(object = pois, params = 'mu', HPD=TRUE, 
          ci=c(85, 95))
-MCMCplot(object = pois, params = 'beta', HPD=TRUE, 
+MCMCplot(object = pois, params = 'delta', HPD=TRUE, 
          ci=c(85, 95))
 
 plot.diag(pois)
@@ -311,7 +313,7 @@ MCMCsummary(nb, params_nb,
 par(mfrow=c(1,1))
 MCMCplot(object = nb, params = 'mu', HPD=TRUE, ci=c(85, 95))
 MCMCplot(object = nb, params = 'r', HPD=TRUE, ci=c(85, 95))
-MCMCplot(object = nb, params = c('beta'), HPD=TRUE, ci=c(85, 95))
+MCMCplot(object = nb, params = c('delta'), HPD=TRUE, ci=c(85, 95))
 
 plot.diag(nb)
 
@@ -488,7 +490,7 @@ MCMCsummary(zip, params_zip,
 par(mfrow=c(1,1))
 MCMCplot(object = zip, params = 'mu', HPD=TRUE, ci=c(85, 95))
 MCMCplot(object = zip, params = 'psi', HPD=TRUE, ci=c(85, 95))
-MCMCplot(object = zip, params = c('beta'), HPD=TRUE, ci=c(85, 95))
+MCMCplot(object = zip, params = c('delta'), HPD=TRUE, ci=c(85, 95))
 
 plot.diag(zip)
 
@@ -854,7 +856,7 @@ m <- list()
     {
       # priors
       mu ~ dnorm(0, sd=5)
-      for (n in 1:3){
+      for (n in 1:5){
         delta[n] ~ dnorm(0,sd=5)
       }
       sigma ~ dunif(0,10)
@@ -905,61 +907,6 @@ m <- list()
                     thin = n.thin,
                     samplesAsCodaMCMC = TRUE,
                     WAIC=TRUE)
-  
-##############
-# postproccess
-##############
 
-####################  
-#*******************  
-# Model comparison 
-# of population cycles
-# using WAIC and ELPD
-#*******************
-####################
-df.waic <- data.frame( 
-            model = 1:7,
-            name = c('TIME+YEAR+YEAR2+TIME:YEAR+TIME:YEAR2',
-                     'TIME+YEAR+YEAR2+TIME:YEAR', 
-                     'TIME+YEAR+YEAR2', 
-                     'TIME+YEAR', 
-                     'TIME', 
-                     'NULL',
-                     'TIME+YEAR+TIME:YEAR'),
-            WAIC = NA, 
-            lppd = NA, 
-            pWAIC = NA
-              )
-for (i in 1:nrow(df.waic)){
-df.waic[i,'WAIC']  <- m[[i]]$WAIC$WAIC
-df.waic[i,'lppd']  <- m[[i]]$WAIC$lppd
-df.waic[i,'pWAIC']  <- m[[i]]$WAIC$pWAIC
-} 
-#df.waic$'-2WAIC' <- -2*df.waic$WAIC 
-df.waic <- df.waic[order(df.waic$WAIC), ]
-df.waic$deltaWAIC <- df.waic$WAIC- df.waic$WAIC[1]
-
-# Model comparison using
-# an approximation of 
-# Leave-one-out cross validation
-library (loo)
-lpy <-lpost <-  list()
-for (j in 1:7){
-mclist <- m[[j]]$samples |> as.mcmc.list()
-lpost[[j]] <- MCMCpstr(mclist, params="logProb_y", type = "chains")[[1]] |>
-               t()
-re <- relative_eff( exp( lpost[[j]] ), 
-              chain_id =c(rep(1, 1000), rep(2, 1000), rep(3, 1000), rep(4, 1000)) )
-lpy[[j]] <- loo(lpost[[j]], r_eff = re)
-}
-looc <- loo_compare(lpy)
-loo.df <- as.data.frame(looc)
-loo.df$model <- as.numeric(substr(rownames(loo.df), 6,6))
-loo.df <- merge(loo.df, df.waic[, c(1,2)], by="model") 
-loo.df <- loo.df[order(loo.df$elpd_diff, decreasing=T), ]
-modtab <- loo.df[,c(1, 10, 2, 3)]
-modtab[,c(3,4)] <- round(modtab[,c(3,4)],1)
-write.csv(modtab, "docs\\model-selection-loo.csv")
-
-save(m=m, looc=looc, df.waic=df.waic,
+save(m=m, 
      file="C:\\Users\\rolek.brian\\OneDrive - The Peregrine Fund\\Documents\\Projects\\Boreal Owl pop trends\\outputs\\full-model-set_population-cycles.Rdata")

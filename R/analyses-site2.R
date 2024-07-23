@@ -4,7 +4,7 @@ library (MCMCvis)
 library (coda)
 library(parallel)
 set.seed(5757575)
-dat <- read.csv("data\\data.csv")
+dat <- read.csv("data\\data_MC.csv")
 
 dat2 <- data.frame(caps=c(dat$MCCaptureSpring, dat$MCFallCapture),
                   effort= c(dat$MCSpringEffort, dat$MCFallEffort),
@@ -32,15 +32,8 @@ timemerge <- data.frame(year = seq(1,length(1994:2023), by=0.5)+1993,
 dat3 <- merge(dat2, timemerge, by="year")
 constl$time2 <- dat3$year4
 cbind(constl$time, constl$time2)
-
-plot(dat2$year2, datl$y/constl$effort, type="l")
-acf(datl$y/constl$effort)
-acf(datl$y/constl$effort, type="p")
-
-# caps are number of captures
-# effort are net hours
-
-
+d2 <- list(dat=dat3, datl=datl, constl=constl)
+save(d2, file="data//data_s2.Rdata")
 ########################
 #*******************
 #* Check goodness-of-fit
@@ -1353,79 +1346,5 @@ m[[14]] <- runMCMC(chmc,
                   samplesAsCodaMCMC = TRUE,
                   WAIC=TRUE)
 
-##############
-# postproccess
-##############
-
-####################  
-#*******************  
-# Model comparison 
-# of population cycles
-# using WAIC and ELPD
-#*******************
-####################
-df.waic <- data.frame( 
-  model = 1:14,
-  name = c('CYCLE+YEAR+YEAR2+CYCLE:YEAR+CYCLE:YEAR2',
-           'CYCLE+YEAR+YEAR2+CYCLE:YEAR', 
-           'CYCLE+YEAR+YEAR2', 
-           'CYCLE+YEAR', 
-           'CYCLE', 
-           'NULL',
-           'CYCLE+YEAR+CYCLE:YEAR',
-           'SEASON+CYCLE+YEAR+YEAR2+CYCLE:YEAR+CYCLE:YEAR2',
-           'SEASON+CYCLE+YEAR+YEAR2+CYCLE:YEAR', 
-           'SEASON+CYCLE+YEAR+YEAR2', 
-           'SEASON+CYCLE+YEAR', 
-           'SEASON+CYCLE', 
-           'SEASON',
-           'SEASON+CYCLE+YEAR+CYCLE:YEAR'),
-  WAIC = NA, 
-  lppd = NA, 
-  pWAIC = NA
-)
-for (i in 1:nrow(df.waic)){
-  df.waic[i,'WAIC']  <- m[[i]]$WAIC$WAIC
-  df.waic[i,'lppd']  <- m[[i]]$WAIC$lppd
-  df.waic[i,'pWAIC']  <- m[[i]]$WAIC$pWAIC
-} 
-#df.waic$'-2WAIC' <- -2*df.waic$WAIC 
-df.waic <- df.waic[order(df.waic$WAIC), ]
-df.waic$deltaWAIC <- df.waic$WAIC- df.waic$WAIC[1]
-
-# Model comparison using
-# an approximation of 
-# Leave-one-out cross validation
-library (loo)
-lpy <-lpost <-  list()
-for (j in 1:14){
-  mclist <- m[[j]]$samples |> as.mcmc.list()
-  lpost[[j]] <- MCMCpstr(mclist, params="logProb_y", type = "chains")[[1]] |>
-    t()
-  re <- relative_eff( exp( lpost[[j]] ), 
-                      chain_id =c(rep(1, 1000), rep(2, 1000), rep(3, 1000), rep(4, 1000)) )
-  lpy[[j]] <- loo(lpost[[j]], r_eff = re)
-}
-looc <- loo_compare(lpy)
-loo.df <- as.data.frame(looc)
-loo.df$model <- as.numeric(substr(rownames(loo.df), 6,7))
-loo.df <- merge(loo.df, df.waic[, c(1,2)], by="model") 
-loo.df <- loo.df[order(loo.df$elpd_diff, decreasing=T), ]
-modtab <- loo.df[,c(1, 10, 2, 3)]
-modtab[,c(3,4)] <- round(modtab[,c(3,4)],1)
-modtab
-write.csv(modtab, "docs\\model-selection-loo-site2.csv")
-
-save(m=m, looc=looc, df.waic=df.waic,
+save(m=m
      file="C:\\Users\\rolek.brian\\OneDrive - The Peregrine Fund\\Documents\\Projects\\Boreal Owl pop trends\\outputs\\full-model-set_population-cycles-site2.Rdata")
-
-###################
-# assess significance
-####################
-params <- c( "mu", "delta", "sigma", "eps")
-MCMCsummary(m[[8]]$samples, params, 
-            HPD=TRUE,  hpd_prob = 0.95,
-            round=3, 
-            pg0 = TRUE, 
-            func = median, 
-            Rhat = TRUE)
