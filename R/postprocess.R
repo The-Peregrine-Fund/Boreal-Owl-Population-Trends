@@ -138,19 +138,19 @@ df.ab2 <- data.frame( year = yr,
                      lci80 = apply(l.ab2, 1, HDInterval::hdi, credMass=.8)[1,] |> exp(),
                      uci80 = apply(l.ab2, 1, HDInterval::hdi, credMass=.8)[2,] |> exp()
 )
-# calculate a four year moving average
-for (t in 17:nrow(l.ab2)){
-for (i in 1:ncol(l.ab2)){
-l.ab3[t,i] <- mean(l.ab2[(t-16):t, i])
-}}
-
-df.ab3 <- data.frame( year = yr,
-                      md = apply(l.ab3, 1, median, na.rm=T) |> exp(),
-                      lci95 = apply(l.ab3, 1, HDInterval::hdi)[1,]  |> exp(),
-                      uci95 = apply(l.ab3, 1, HDInterval::hdi)[2,] |> exp(),
-                      lci80 = apply(l.ab3, 1, HDInterval::hdi, credMass=.8)[1,] |> exp(),
-                      uci80 = apply(l.ab3, 1, HDInterval::hdi, credMass=.8)[2,] |> exp()
-)
+# # calculate a four year moving average
+# for (t in 17:nrow(l.ab2)){
+# for (i in 1:ncol(l.ab2)){
+# l.ab3[t,i] <- mean(l.ab2[(t-16):t, i])
+# }}
+# 
+# df.ab3 <- data.frame( year = yr,
+#                       md = apply(l.ab3, 1, median, na.rm=T) |> exp(),
+#                       lci95 = apply(l.ab3, 1, HDInterval::hdi)[1,]  |> exp(),
+#                       uci95 = apply(l.ab3, 1, HDInterval::hdi)[2,] |> exp(),
+#                       lci80 = apply(l.ab3, 1, HDInterval::hdi, credMass=.8)[1,] |> exp(),
+#                       uci80 = apply(l.ab3, 1, HDInterval::hdi, credMass=.8)[2,] |> exp()
+# )
 
 df.dat <- data.frame(count=d1$datl$y/d1$constl$effort,
                      year=1996:2023)
@@ -224,21 +224,21 @@ df.ab2 <- data.frame( year = yr,
                       lci80 = apply(l.ab2, 1, HDInterval::hdi, credMass=.8)[1,] |> exp(),
                       uci80 = apply(l.ab2, 1, HDInterval::hdi, credMass=.8)[2,] |> exp()
 )
-# calculate a four year moving average
-for (t in 1:nrow(l.ab2)){
-  for (i in 1:ncol(l.ab2)){
-    ind1 <- ifelse( (t-16)<1, 1, t-16)
-    ind2 <- ifelse( (t+16)>nrow(l.ab2), nrow(l.ab2), t+16)
-    l.ab3[t,i] <- mean(l.ab2[ind1:ind2, i])
-  }}
-
-df.ab3 <- data.frame( year = yr,
-                      md = apply(l.ab3, 1, median, na.rm=T) |> exp(),
-                      lci95 = apply(l.ab3, 1, HDInterval::hdi)[1,]  |> exp(),
-                      uci95 = apply(l.ab3, 1, HDInterval::hdi)[2,] |> exp(),
-                      lci80 = apply(l.ab3, 1, HDInterval::hdi, credMass=.8)[1,] |> exp(),
-                      uci80 = apply(l.ab3, 1, HDInterval::hdi, credMass=.8)[2,] |> exp()
-)
+# # calculate a four year moving average
+# for (t in 1:nrow(l.ab2)){
+#   for (i in 1:ncol(l.ab2)){
+#     ind1 <- ifelse( (t-16)<1, 1, t-16)
+#     ind2 <- ifelse( (t+16)>nrow(l.ab2), nrow(l.ab2), t+16)
+#     l.ab3[t,i] <- mean(l.ab2[ind1:ind2, i])
+#   }}
+# 
+# df.ab3 <- data.frame( year = yr,
+#                       md = apply(l.ab3, 1, median, na.rm=T) |> exp(),
+#                       lci95 = apply(l.ab3, 1, HDInterval::hdi)[1,]  |> exp(),
+#                       uci95 = apply(l.ab3, 1, HDInterval::hdi)[2,] |> exp(),
+#                       lci80 = apply(l.ab3, 1, HDInterval::hdi, credMass=.8)[1,] |> exp(),
+#                       uci80 = apply(l.ab3, 1, HDInterval::hdi, credMass=.8)[2,] |> exp()
+# )
 
 df.dat <- data.frame(count=d2$datl$y/d2$constl$effort,
                      year=d2$dat$year2)
