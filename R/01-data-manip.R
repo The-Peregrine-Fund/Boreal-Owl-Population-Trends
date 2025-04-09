@@ -11,10 +11,9 @@ save(dat=dat, datl=datl, constl=constl, file="data//data_s1.Rdata")
 # Whitefish Point Bird Observatory (WPBO), located at Whitefish Point, Chippewa County, MI
 dat <- read.csv("data\\data_WP.csv")
 
-dat2 <- data.frame(caps=dat$MCFallCapture,
-                   effort= dat$MCFallEffort,
-                   season= rep("fall", length(dat$MCFallEffort)),
-                   year=dat$Year)
+dat2 <- data.frame(caps=dat$caps,
+                   effort= dat$effort,
+                   year=dat$year)
 dat2 <- dat2[!is.na(dat2$effort), ]
 dat2 <- dat2[order(dat2$year),]
 
