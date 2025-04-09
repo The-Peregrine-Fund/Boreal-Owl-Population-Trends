@@ -218,9 +218,8 @@ p23 <- plot_grid(ap23[[1]], ap23[[2]], nrow = 2, align="v",
 p23
 
 ## ---- saveplot12 --------
-ggsave(filename="C:\\Users\\rolek.brian\\OneDrive - The Peregrine Fund\\Documents\\Projects\\Boreal Owl pop trends\\docs\\figs\\populationtrends.tiff",
-       plot=p23, device="tiff", width=6, height=8, dpi=300)
-
+# ggsave(filename="C:\\Users\\rolek.brian\\OneDrive - The Peregrine Fund\\Documents\\Projects\\Boreal Owl pop trends\\docs\\figs\\populationtrends.tiff",
+#        plot=p23, device="tiff", width=6, height=8, dpi=300)
 
 # summaries
 # which year had max median catches
