@@ -17,20 +17,20 @@ load("data//data_s2.Rdata") # data for site 2
 d2 <- list(dat=dat3, datl=datl, constl=constl)
 
 # Load model outputs
-load("C:\\Users\\rolek.brian\\OneDrive - The Peregrine Fund\\Documents\\Projects\\Boreal Owl pop trends\\outputs\\full-model-site1.Rdata")
-load("C:\\Users\\rolek.brian\\OneDrive - The Peregrine Fund\\Documents\\Projects\\Boreal Owl pop trends\\outputs\\site1_gof.Rdata")
+load("outputs\\full-model-site1.Rdata")
+load("outputs\\site1_gof.Rdata")
 m.site1 <- list(m1=lapply(m[[1]], as.mcmc),  
                 m2=lapply(m[[2]], as.mcmc),
                 m3=lapply(m[[3]], as.mcmc),
                 mr=lapply(m.t, as.mcmc))
-load("C:\\Users\\rolek.brian\\OneDrive - The Peregrine Fund\\Documents\\Projects\\Boreal Owl pop trends\\outputs\\full-model-site1-juvs.Rdata")
-load("C:\\Users\\rolek.brian\\OneDrive - The Peregrine Fund\\Documents\\Projects\\Boreal Owl pop trends\\outputs\\site1_gof-juvs.Rdata")
+load("outputs\\full-model-site1-juvs.Rdata")
+load("outputs\\site1_gof-juvs.Rdata")
 m.site1j <- list(m1=lapply(m[[1]], as.mcmc),  
                  m2=lapply(m[[2]], as.mcmc),
                  m3=lapply(m[[3]], as.mcmc),
                  mr=lapply(m.tj, as.mcmc))
-load("C:\\Users\\rolek.brian\\OneDrive - The Peregrine Fund\\Documents\\Projects\\Boreal Owl pop trends\\outputs\\full-model-site2.Rdata")
-load("C:\\Users\\rolek.brian\\OneDrive - The Peregrine Fund\\Documents\\Projects\\Boreal Owl pop trends\\outputs\\site2_gof.Rdata")
+load("outputs\\full-model-site2.Rdata")
+load("outputs\\site2_gof.Rdata")
 m.site2 <- list(m1=lapply(m[[1]], as.mcmc),  
                 m2=lapply(m[[2]], as.mcmc),
                 m3=lapply(m[[3]], as.mcmc),

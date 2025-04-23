@@ -371,7 +371,7 @@ MCMCplot(object = zip, params = 'psi', HPD=TRUE, ci=c(85, 95))
 MCMCplot(object = zip, params = 'delta', HPD=TRUE, ci=c(85, 95))
 
 save(m=m,
-     file="C:\\Users\\rolek.brian\\OneDrive - The Peregrine Fund\\Documents\\Projects\\Boreal Owl pop trends\\outputs\\site2_gof.Rdata")
+     file="outputs\\site2_gof.Rdata")
 
 #***************************
 # compare goodness-of-fit
@@ -463,4 +463,4 @@ m.wp <- parLapply(cl = this_cluster,
 stopCluster(this_cluster)
 
 save(m.wp=m.wp,
-     file="C:\\Users\\rolek.brian\\OneDrive - The Peregrine Fund\\Documents\\Projects\\Boreal Owl pop trends\\outputs\\full-model-site2.Rdata")
+     file="outputs\\full-model-site2.Rdata")
