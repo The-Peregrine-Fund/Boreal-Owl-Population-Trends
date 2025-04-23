@@ -1,7 +1,8 @@
 
 # Tadoussac Bird Observatory (OOT), located in Tadoussac, Québec, Canada 
 dat <- read.csv("data\\data_T.csv")
-datl <- list(y = dat$caps)
+datl <- list(y = dat$caps,
+             y_juv= dat$caps_juv)
 constl <- list(time = (dat$year - median(dat$year))/ max(dat$year - median(dat$year)),
                effort = dat$effort/500,
                ntime = length(dat$year),

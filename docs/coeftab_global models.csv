@@ -1,0 +1,31 @@
+"","site","median","95%_HPDL","95%_HPDU","Rhat","pd"
+"mu","Tadoussac",2.55,2.01,3.1,1,1
+"delta[1]","Tadoussac",1.03,0.3,1.95,1,1
+"delta[2]","Tadoussac",-1.65,-3.09,-0.35,1,0.99
+"delta[3]","Tadoussac",-0.41,-1.12,0.37,1,0.87
+"delta[4]","Tadoussac",1.61,0.84,2.39,1,1
+"delta[5]","Tadoussac",0.88,-0.17,1.9,1,0.96
+"delta[6]","Tadoussac",-2.51,-3.65,-1.52,1,1
+"delta[7]","Tadoussac",-0.66,-2.52,0.98,1,0.79
+"delta[8]","Tadoussac",0.1,-1.7,1.95,1,0.55
+"sigma","Tadoussac",0.87,0.57,1.32,1,1
+"mu1","Tadoussac juveniles",1.58,0.93,2.19,1,1
+"delta[1]1","Tadoussac juveniles",1.09,0.28,2.03,1,1
+"delta[2]1","Tadoussac juveniles",-0.96,-2.47,0.48,1,0.91
+"delta[3]1","Tadoussac juveniles",0.13,-0.68,1.02,1,0.63
+"delta[4]1","Tadoussac juveniles",1.17,0.27,2.03,1,1
+"delta[5]1","Tadoussac juveniles",1.14,0,2.3,1,0.98
+"delta[6]1","Tadoussac juveniles",-1.95,-3.08,-0.82,1,1
+"delta[7]1","Tadoussac juveniles",-1.25,-3.23,0.58,1,0.92
+"delta[8]1","Tadoussac juveniles",0.21,-1.75,2.21,1,0.59
+"sigma1","Tadoussac juveniles",0.92,0.56,1.41,1,1
+"mu2","Whitefish Point",-3.022,-4.694,-1.665,1,1
+"delta[1]2","Whitefish Point",-1.382,-2.891,-0.243,1,0.993
+"delta[2]2","Whitefish Point",1.326,-1.148,3.945,1,0.86
+"delta[3]2","Whitefish Point",-3.961,-5.925,-2.448,1,1
+"delta[4]2","Whitefish Point",-2.635,-4.528,-1.322,1,1
+"delta[5]2","Whitefish Point",0.945,-0.817,2.431,1,0.854
+"delta[6]2","Whitefish Point",1.725,0.014,3.387,1,0.987
+"delta[7]2","Whitefish Point",1.248,-1.748,4.253,1,0.808
+"delta[8]2","Whitefish Point",6.205,3.44,9.425,1,1
+"sigma2","Whitefish Point",0.741,0.279,1.59,1,1

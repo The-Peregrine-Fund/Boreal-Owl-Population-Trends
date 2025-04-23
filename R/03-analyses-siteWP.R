@@ -399,9 +399,11 @@ plot.diag(zip)
 ##################
 # M1- GLOBAL MODEL
 ##################
-library(nimble)
-library(coda)
-library(nimbleHMC)
+run <- function(seed, datl, constl){
+  library(nimble)
+  library(coda)
+  library(nimbleHMC)
+  
 code <- nimbleCode(
   {
     # priors
@@ -447,10 +449,19 @@ mod <- nimbleModel(code, calculate=T, constants = constl,
                    buildDerivs = TRUE)
 mod$calculate()
 cmod <- compileNimble(mod )
-confhmc <- configureMCMC(mod, enableWAIC = TRUE)
+confhmc <- configureHMC(mod, enableWAIC = TRUE)
 confhmc$setMonitors(params)
 hmc <- buildMCMC(confhmc)
 chmc <- compileNimble(hmc, project=mod, resetFunctions = TRUE)
+post <- runMCMC(chmc,
+                niter = n.iter, 
+                nburnin = n.burnin,
+                nchains = n.chains,
+                thin = n.thin,
+                samplesAsCodaMCMC = T)
+
+return(post)
+} # run function end
 
 this_cluster <- makeCluster(4)
 m.wp <- parLapply(cl = this_cluster, 

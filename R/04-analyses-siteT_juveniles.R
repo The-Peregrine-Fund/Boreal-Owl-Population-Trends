@@ -7,7 +7,7 @@ library(parallel)
 set.seed(5757575)
 load("data//data_s1.Rdata")
 source("R//plot_diag_function.R")
-
+datl$y <- datl$y_juv
 # create a list of models for 
 # Goodness of fit checks 
 # using Poisson, negative binomial, and zero-inflated Poisson
@@ -380,7 +380,7 @@ MCMCplot(object = zip, params = 'psi', HPD=TRUE, ci=c(85, 95))
 MCMCplot(object = zip, params = c('delta'), HPD=TRUE, ci=c(85, 95))
 
 save(m=m,
-     file="C:\\Users\\rolek.brian\\OneDrive - The Peregrine Fund\\Documents\\Projects\\Boreal Owl pop trends\\outputs\\site1_gof.Rdata")
+     file="C:\\Users\\rolek.brian\\OneDrive - The Peregrine Fund\\Documents\\Projects\\Boreal Owl pop trends\\outputs\\site1_gof-juvs.Rdata")
 
 #***************************
 # compare goodness-of-fit
@@ -403,7 +403,6 @@ run <- function(seed, datl, constl){
   library(nimble)
   library(coda)
   library(nimbleHMC)
-
   code <- nimbleCode(
     {
       # priors
@@ -418,7 +417,7 @@ run <- function(seed, datl, constl){
         y[t] ~ dpois(lambda[t])
         log(lambda[t]) <- mu + log(effort[t]) + 
           delta[1]*time[t] + 
-          delta[2]*time[t]^2 +
+          #delta[2]*time[t]^2 +
           delta[3]*cos(2*3.141593*time2[t]) + 
           delta[4]*sin(2*3.141593*time2[t]) +
           delta[5]*cos(2*3.141593*time2[t])*time[t] + 
@@ -446,7 +445,7 @@ run <- function(seed, datl, constl){
                      data = datl, inits = inits(), 
                      buildDerivs = TRUE)
   mod$calculate()
-  cmod <- compileNimble( mod )
+  cmod <- compileNimble(mod )
   confhmc <- configureHMC(mod, enableWAIC = TRUE)
   confhmc$setMonitors(params)
   hmc <- buildMCMC(confhmc)
@@ -462,12 +461,12 @@ run <- function(seed, datl, constl){
 } # run function end
 
   this_cluster <- makeCluster(4)
-  m.t <- parLapply(cl = this_cluster, 
+  m.tj <- parLapply(cl = this_cluster, 
                     X = 1:4, 
                     fun = run, 
                     dat=datl, 
                     const=constl)
   stopCluster(this_cluster)
 
-save(m.t=m.t,  
-     file="C:\\Users\\rolek.brian\\OneDrive - The Peregrine Fund\\Documents\\Projects\\Boreal Owl pop trends\\outputs\\full-model-site1.Rdata")
+save(m.tj=m.tj,  
+     file="C:\\Users\\rolek.brian\\OneDrive - The Peregrine Fund\\Documents\\Projects\\Boreal Owl pop trends\\outputs\\full-model-site1-juvs.Rdata")
