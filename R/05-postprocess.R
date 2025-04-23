@@ -122,8 +122,8 @@ coeftab.s2.r <- MCMCsummary(m.site2$mr, pars,
 coeftab.s2.r$site <- "Whitefish Point"
 coeftab.s2.r <- coeftab.s2.r[, c(9,7,3,4,5,8)]
 
-# rbind(coeftab.s1.r, coeftab.s1j.r, coeftab.s2.r) |>
-#   write.csv('docs\\coeftab_reduced models.csv')
+rbind(coeftab.s1.r, coeftab.s1j.r, coeftab.s2.r) |>
+  write.csv('docs\\coeftab_reduced models.csv')
 
 #**********************
 #* Plot autocorrelation
