@@ -125,9 +125,6 @@ MCMCtrace(pois, params_p, pdf=F,
 MCMCsummary(pois, params_p, 
             HPD=TRUE,  hpd_prob = 0.95,
             round=3, pg0 = TRUE, func = median)
-MCMCsummary(pois, params_p, 
-            HPD=TRUE,  hpd_prob = 0.85,
-            round=3, pg0 = TRUE, func = median)
 par(mfrow=c(1,1))
 MCMCplot(object = pois, params = 'mu', HPD=TRUE, 
          ci=c(85, 95))
@@ -250,9 +247,6 @@ MCMCtrace(nb, params_nb, pdf=F,
 MCMCsummary(nb, params_nb, 
             HPD=TRUE,  hpd_prob = 0.95,
             round=3, pg0 = TRUE, func = median)
-MCMCsummary(nb, params_nb, 
-            HPD=TRUE,  hpd_prob = 0.85,
-            round=3, pg0 = TRUE, func = median)
 par(mfrow=c(1,1))
 MCMCplot(object = nb, params = 'mu', HPD=TRUE, ci=c(85, 95))
 MCMCplot(object = nb, params = 'r', HPD=TRUE, ci=c(85, 95))
@@ -370,9 +364,6 @@ MCMCtrace(zip, params_zip, pdf=F,
           ind = TRUE, Rhat = TRUE, n.eff = TRUE)
 MCMCsummary(zip, params_zip, 
             HPD=TRUE,  hpd_prob = 0.95,
-            round=3, pg0 = TRUE, func = median)
-MCMCsummary(zip, params_zip, 
-            HPD=TRUE,  hpd_prob = 0.85,
             round=3, pg0 = TRUE, func = median)
 par(mfrow=c(1,1))
 MCMCplot(object = zip, params = 'mu', HPD=TRUE, ci=c(85, 95))
